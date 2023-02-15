@@ -20,15 +20,15 @@ namespace DocumentDistance
         /// <param name="doc2FilePath">File path of 2nd document</param>
         /// <returns>The angle (in degree) between the 2 documents</returns>
         public static HashSet<string> allWords = new HashSet<string>();
-        public static Dictionary<string, int> separateDoc(ref string doc)
+        public static Dictionary<string, long> separateDoc(ref string doc)
         {
-            var docWords = new Dictionary<string, int>();
+            var docWords = new Dictionary<string, long>();
             doc = doc.ToLower();
             string tmpWord = "";
             int sz = doc.Length;
             for (int i = 0; i <= sz; i++)
             {
-                if (i != sz && doc[i] >= 'a' && doc[i] <= 'z')
+                if ( i != sz && ( (doc[i] >= 'a' && doc[i] <= 'z') || (doc[i] >= '0' && doc[i] <= '9') ) )
                     tmpWord += doc[i];
                 else if (tmpWord != "")
                 {
@@ -51,30 +51,33 @@ namespace DocumentDistance
             double dotProd = 0, firstDocEcldDist = 0, secondDocEcldDist = 0;
             foreach (var w in allWords)
             {
-                firstDocWords.TryGetValue(w, out int reptOfWrdFirstDoc);
-                secondDocWords.TryGetValue(w, out int reptOfWrdSecondDoc);
+                firstDocWords.TryGetValue(w, out long reptOfWrdFirstDoc);
+                secondDocWords.TryGetValue(w, out long reptOfWrdSecondDoc);
                 dotProd += reptOfWrdFirstDoc * reptOfWrdSecondDoc;
                 firstDocEcldDist += Math.Pow(reptOfWrdFirstDoc, 2);
                 secondDocEcldDist += Math.Pow(reptOfWrdSecondDoc, 2);
             }
-            firstDocEcldDist = Math.Sqrt(firstDocEcldDist);
-            secondDocEcldDist = Math.Sqrt(secondDocEcldDist);
-            double angleInRadius = dotProd / (firstDocEcldDist * secondDocEcldDist);
-            angleInRadius = Math.Round(angleInRadius, 5);
-            if (angleInRadius == 0)
-                angleInRadius = 0;
-            else
-                angleInRadius = Math.Acos(angleInRadius);
-            if (Double.IsNaN(angleInRadius)) angleInRadius = 0;
-
+            double crossProd = Math.Sqrt(firstDocEcldDist * secondDocEcldDist);
+            Console.WriteLine();
+            //Console.WriteLine(dotProd);
+            //Console.WriteLine(crossProd);
+            double angleInRadius = dotProd / crossProd;
+            angleInRadius = Math.Acos(angleInRadius);
             double angleInDegrees = (180 / Math.PI) * angleInRadius;
+            if (Double.IsNaN(angleInDegrees)) angleInDegrees = 90;
+            //Console.WriteLine(angleInDegrees);
+            //angleInDegrees = Math.Round(angleInDegrees, 1);
             return angleInDegrees;
         }
         public static double CalculateDistance(string doc1FilePath, string doc2FilePath)
         {
             // TODO comment the following line THEN fill your code here
             //throw new NotImplementedException();
-            return angleBetweenTwoVectors(doc1FilePath, doc2FilePath);
+            string doc1 = File.ReadAllText(doc1FilePath);
+            //Console.WriteLine(doc1);
+            string doc2 = File.ReadAllText(doc2FilePath);
+            //Console.WriteLine(doc2);
+            return angleBetweenTwoVectors(doc1, doc2);
         }
     }
 }
