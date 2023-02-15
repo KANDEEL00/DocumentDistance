@@ -59,14 +59,10 @@ namespace DocumentDistance
             }
             double crossProd = Math.Sqrt(firstDocEcldDist * secondDocEcldDist);
             Console.WriteLine();
-            //Console.WriteLine(dotProd);
-            //Console.WriteLine(crossProd);
             double angleInRadius = dotProd / crossProd;
             angleInRadius = Math.Acos(angleInRadius);
             double angleInDegrees = (180 / Math.PI) * angleInRadius;
             if (Double.IsNaN(angleInDegrees)) angleInDegrees = 90;
-            //Console.WriteLine(angleInDegrees);
-            //angleInDegrees = Math.Round(angleInDegrees, 1);
             return angleInDegrees;
         }
         public static double CalculateDistance(string doc1FilePath, string doc2FilePath)
@@ -74,9 +70,7 @@ namespace DocumentDistance
             // TODO comment the following line THEN fill your code here
             //throw new NotImplementedException();
             string doc1 = File.ReadAllText(doc1FilePath);
-            //Console.WriteLine(doc1);
             string doc2 = File.ReadAllText(doc2FilePath);
-            //Console.WriteLine(doc2);
             return angleBetweenTwoVectors(doc1, doc2);
         }
     }
