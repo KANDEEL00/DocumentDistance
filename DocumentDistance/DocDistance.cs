@@ -22,47 +22,7 @@ namespace DocumentDistance
         public static double CalculateDistance(string doc1FilePath, string doc2FilePath)
         {
             // TODO comment the following line THEN fill your code here
-            //throw new NotImplementedException();
-
-            
-            double angle = 0;
-            return angle;
-        }
-
-        HashSet<string> allWords;
-        public static void separateDoc(ref string doc, ref Dictionary<string, int> docWords)
-        {
-            doc.ToLower();
-            //Console.WriteLine(doc);
-            
-            string tmpWord="";
-            int sz = doc.Length;
-            for (int i = 0; i <= sz; i++)
-            {
-                if (doc[i] >= 'a' && doc[i] <= 'z' && i != sz)
-                    tmpWord.Append(doc[i]);
-                else
-                {
-                    if (tmpWord=="")
-                    {
-                        docWords[tmpWord]++;
-                        //allWords.insert(tmpWord);
-                        //tmpWord.clear();
-                    }
-                }
-            }
-
-            /*
-            //check map 'DocWords'
-            cout<<"check map 'DocWords'"<<endl;
-            int cnt=0;
-            for(auto w:docWords){
-                cout<<w.first<<" "<<w.second<<endl;
-                cnt+=w.second;
-            }
-            cout<<cnt<<endl;
-            */
-            
+            throw new NotImplementedException();
         }
     }
 }
